@@ -3,46 +3,34 @@ import sys
 
 
 # add Payload for data
-class BinaryTree :
+class Node :
 	
-	def __init__(self, rootObj) :
-		self.key = rootObj
+	def __init__(self, level) :
+		self.level = level
+		self.payload = ""
 		self.leftChild = None
-		self.rightChild = None	
+		self.rightChild = None
+			
+
+	def __str__(self) :
+		return 	"level={self.level}, payload={self.payload} ".format(self=self) 
 
 	
-	def insertLeft(self, newNode) :	
-		# if no exisiting left child, just create new and insert
-		if self.leftChild == None :
-			self.leftChild = BinaryTree(newNode)			
-		else:
-			# i don't think there is a case for else as we domt want to move anything
-			print('insertLeft - else, shouldnt be here!')
-			#t = BinaryTree(newNode)
-			#t.leftChild = self.leftChild
-			#self.leftChild = t 
+	def insertLeft(self, level) :	
+		if level < minLevel 
+			print('error in insertLeft, requested level is: ' + str(level))
+			sys.exit()
 			
-	def insertRight(self, newNode) :
-		# if no existing right child, creare newand insert
-		if self.rightChild == None:
-			self.rightChild = BinaryTree(newNode)
-		else:
-			print('insertRight - else, shouldnt be here!')
-			#t = BinaryTree(newNode)
-			#t.rightChild = self.rightChild
-			#self.rightChild = t
+		self.leftChild = Node(level)			
+
 			
-	def getRightChild(self):
-		return self.rightChild
+	def insertRight(self, level) :
+		if level < minLevel 
+			print('error in insertRight, requested level is: ' + str(level))
+			sys.exit()
+				
+		self.rightChild = Node(level)
 	
-	def getLeftChild(self):
-		return self.leftChild
-	
-	def setRootVal(self,obj):
-		self.key = obj
-	
-	def getRootVal(self):
-		return self.key
 		
 
 	def traverse(self):
@@ -53,6 +41,26 @@ class BinaryTree :
 			self.rightChild.traverse()      
 
 
+	def isAllocated(self) :
+		if self.payload == "" :
+			return False
+		else :
+			return True
+			
+	def isRightLevel(self, level) :
+		if self.level == level :
+			return True
+		else :
+			return False
+			
+	def isLeaf(self) :
+		if self.leftChild is None :
+			return True
+		else :
+			return False
+			
+
+'''
 class Node :
 	
 	def __init__( self, parent, capacity=1024, level=0, left=None, right=None, size=0 ) :
@@ -63,14 +71,8 @@ class Node :
 		self.size = size
 		self.parent = parent
 		#self.name = name
-		
-	def __str__(self) :
-		retString = (	"capacity={self.capacity}, size={self.size} "
-									"level={self.level},".format(self=self) )
-
-		if self.parent is not None :
-			retString += ", parent.size={self.parent.size}".format(self=self)
-		return retString
+'''	
+	
 		
 
 
@@ -88,6 +90,49 @@ def findLevel( u, size ) :
 		return findLevel(u-1, size)
 
 
+def addNodeToTree(tree, node) :
+	if tree.isAllocated() :
+		print ('allocated, returning False')
+		return False
+	
+	if tree.isRightLevel(node.level) :
+		if tree.isLeaf() :
+			print('call allocate')
+			return True
+		else :
+			return False
+	
+	if tree.isLeaf() :
+		print('create children')
+		tree.insertLeft(tree.level - 1)
+		tree.insertRight(tree.level - 1)
+		
+	if addNodeToTree(tree.leftChild, node) == True :
+		return True
+	else 
+		if addNodeToTree(tree.rightChild, node) == True :
+			return True
+	return False
+		
+
+
+def addNodeToTree_old(tree,  node) :
+	# if node is free
+	if not tree.payload :
+		
+		if tree.level == node.level :
+			print('insert here')
+			return node
+		else :
+			print('descend a level')
+			tree.insertLeft()
+			tree.insertRight()
+			
+	else :
+		print('tree full')
+
+def printTree( tree ) :
+	print(tree)
 
 # set some parameters
 maxBlock = 8
@@ -101,20 +146,30 @@ if size > maxBlock :
 	print('size is too big')
 	sys.exit()
 	
-level = findLevel(u,size)
-print('size = ' + str(size) + ',  looking for level = ' + str(level))
+level = findLevel(u,size) 
+
+n1 = Node(3)
+n1.payload = 'Ben'
+
+n2 = Node(3)
+n2.payload = 'Jen'
+
+n3 = Node(2)
+n3.payload = 'Finn'
+
+n4 = Node(2)
+n4.payload = 'El'
+
+
 
 # start a tree
-tree = Node(None, maxBlock, maxLevel)
-print(str(tree))
+tree = Node(3)
+print(tree)
 
-# add size to tree
-if level == tree.level :
-	tree.size = size
-	print(tree)
-
-else :
-	tree
+tree = addNodeToTree(tree, n1)
+printTree(tree)
+tree = addNodeToTree(tree, n2)
+printTree(tree)
 
 
 
