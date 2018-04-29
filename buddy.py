@@ -17,7 +17,7 @@ class Node :
 
 	
 	def insertLeft(self, level) :	
-		if level < minLevel 
+		if level < minLevel :
 			print('error in insertLeft, requested level is: ' + str(level))
 			sys.exit()
 			
@@ -25,7 +25,7 @@ class Node :
 
 			
 	def insertRight(self, level) :
-		if level < minLevel 
+		if level < minLevel :
 			print('error in insertRight, requested level is: ' + str(level))
 			sys.exit()
 				
@@ -109,7 +109,7 @@ def addNodeToTree(tree, node) :
 		
 	if addNodeToTree(tree.leftChild, node) == True :
 		return True
-	else 
+	else :
 		if addNodeToTree(tree.rightChild, node) == True :
 			return True
 	return False
