@@ -23,37 +23,7 @@ def findLevel(u, size):
 		# recursively descend levels
 		return findLevel(u - 1, size)
 
-'''
-def addNodeToTree(tree, node):
 
-	if tree.isAllocated():
-		print('allocated, returning False')
-		return False
-
-	if tree.isRightLevel(node.level):
-		if tree.isLeaf():
-			print('call allocate')
-			tree.payload = node.payload
-			return True
-
-		else:
-			return False
-
-	if tree.isLeaf():
-		print('create children')
-		tree.insertLeft(tree.level - 1)
-		tree.insertRight(tree.level - 1)
-
-	if addNodeToTree(tree.leftChild, node) == True:
-		return True
-
-	else:
-
-		if addNodeToTree(tree.rightChild, node) == True:
-			return True
-
-	return False
-'''
 
 u = node.maxLevel
 size = 4
@@ -86,7 +56,7 @@ n6.payload = 'Bergen'
 tree = tree.Tree(node.maxLevel)
 
 #print(tree)
-
+print ('top free level = ' + str(tree.isFree(level))) 
 print("Adding n3")
 
 if not tree.addNode(tree.topNode, n3):
@@ -94,6 +64,7 @@ if not tree.addNode(tree.topNode, n3):
 	tree.traverse()
 	sys.exit()
 
+print ('top free level = ' + str(tree.isFree(level))) 
 print("Adding n4")
 
 if not tree.addNode(tree.topNode, n4):
@@ -101,6 +72,7 @@ if not tree.addNode(tree.topNode, n4):
 	tree.traverse()
 	sys.exit()
 
+print ('top free level = ' + str(tree.isFree(level))) 
 print("Adding n2")
 
 if not tree.addNode(tree.topNode, n2):
@@ -108,7 +80,7 @@ if not tree.addNode(tree.topNode, n2):
 	tree.traverse()
 	sys.exit()
 
-
+print ('top free level = ' + str(tree.isFree(level))) 
 print("Adding n1")
 
 if not tree.addNode(tree.topNode, n1):
@@ -116,6 +88,7 @@ if not tree.addNode(tree.topNode, n1):
 	tree.traverse()
 	sys.exit()
 
+print ('top free level = ' + str(tree.isFree(level))) 
 print("Adding n5")
 
 if not tree.addNode(tree.topNode, n5):
@@ -123,16 +96,16 @@ if not tree.addNode(tree.topNode, n5):
 	sys.exit()
 
 
-if tree.isFree(level) :
-	
-	print("Adding n6")
+print ('top free level = ' + str(tree.isFree(level))) 	
+print("Adding n6")
 
-	if not tree.addNode(tree.topNode, n6):
-		print("exiting")
-		sys.exit()
-		
-	tree.traverse()
-		
-else :
-	print ('no space for level ' + str(level))
+if not tree.addNode(tree.topNode, n6):
+	print("exiting")
+	sys.exit()
+	
+tree.traverse()
+
+print ('top free level = ' + str(tree.isFree(level))) 	
+#else :
+	#print ('no space for level ' + str(level))
 

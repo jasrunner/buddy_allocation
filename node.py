@@ -26,6 +26,7 @@ class Node:
 		self.payload = ""
 		self.leftChild = None
 		self.rightChild = None
+		self.right = False
 
 	# string representation for human readability
 	def __str__(self):
@@ -91,4 +92,19 @@ class Node:
 				return True
 		
 		return False
+
+	def topFreeLevel (self):
+		#if self.isRightLevel(level):
 			
+		if self.isLeaf() and not self.payload:
+				return self.level
+		
+		leftLevel = 0
+		rightLevel = 0	
+		if self.leftChild:
+			leftLevel =  self.leftChild.topFreeLevel()
+		if self.rightChild :
+			rightLevel = self.rightChild.topFreeLevel()
+		
+		return max(leftLevel,rightLevel)
+	
